@@ -122,24 +122,28 @@ class _FirstPageState extends State<FirstPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-           
-                DottedBorder(
-                    borderType: BorderType.Rect,
-                    dashPattern: [6],
-                    strokeWidth: 2,
-                    strokeCap: StrokeCap.square,
-                    color: Color(0xff17566b),
-                    child: 
-                     SizedBox(
-                height: 150.0,
-                width: 300.0,
-                child: FlatButton(
+            DottedBorder(
+                borderType: BorderType.Rect,
+                dashPattern: [6],
+                strokeWidth: 2,
+                strokeCap: StrokeCap.square,
+                color: Color(0xff17566b),
+                child: SizedBox(
+                    height: 150.0,
+                    width: 300.0,
+                    child: FlatButton(
                         onPressed: getImage,
                         splashColor: Colors.transparent,
                         child: this.image == null
-                            ? Text('No image selected', style: TextStyle(color: Color(0xff17566b), fontWeight: FontWeight.w300))
+                            ? Text('No image selected',
+                                style: TextStyle(
+                                    color: Color(0xff17566b),
+                                    fontWeight: FontWeight.w300))
                             : Text(basename(this.image.path),
-                                textAlign: TextAlign.center, style: TextStyle(color: Color(0xff17566b), fontWeight: FontWeight.w300))))),
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: Color(0xff17566b),
+                                    fontWeight: FontWeight.w300))))),
             SizedBox(height: 10.0),
             SizedBox(
                 height: 30.0,
@@ -163,7 +167,8 @@ class _FirstPageState extends State<FirstPage> {
                         },
                   child: Text(
                     'Upload',
-                    style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w300),
+                    style:
+                        TextStyle(fontSize: 14.0, fontWeight: FontWeight.w300),
                   ),
                 ))
           ],
@@ -294,7 +299,9 @@ class _RestaurantListTileState extends State<RestaurantListTile> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(widget.place.name),
+      title: Text(widget.place.name.length <= 42
+          ? widget.place.name
+          : '${widget.place.name.substring(0, 42)}...'),
       subtitle: Text(widget.place.address),
       leading: Container(
         child: ClipRRect(
