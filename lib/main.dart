@@ -4,10 +4,12 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:dotted_border/dotted_border.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_webservice/places.dart';
 import 'package:http/http.dart';
 import 'package:image_picker_modern/image_picker_modern.dart';
+import 'package:loading_indicator/loading_indicator.dart';
 import 'package:path/path.dart';
 
 import 'api_key.dart';
@@ -115,28 +117,35 @@ class _FirstPageState extends State<FirstPage> {
         title: Text('SeeFood'),
         backgroundColor: Colors.cyan[300],
       ),
+      backgroundColor: Color(0xffe4edf1),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            SizedBox(
+           
+                DottedBorder(
+                    borderType: BorderType.Rect,
+                    dashPattern: [6],
+                    strokeWidth: 2,
+                    strokeCap: StrokeCap.square,
+                    color: Color(0xff17566b),
+                    child: 
+                     SizedBox(
                 height: 150.0,
                 width: 300.0,
-                child: OutlineButton(
-                    onPressed: getImage,
-                    splashColor: Colors.transparent,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5.0)),
-                    child: this.image == null
-                        ? Text('No image selected')
-                        : Text(basename(this.image.path),
-                            textAlign: TextAlign.center))),
-            SizedBox(height: 5.0),
+                child: FlatButton(
+                        onPressed: getImage,
+                        splashColor: Colors.transparent,
+                        child: this.image == null
+                            ? Text('No image selected', style: TextStyle(color: Color(0xff17566b), fontWeight: FontWeight.w300))
+                            : Text(basename(this.image.path),
+                                textAlign: TextAlign.center, style: TextStyle(color: Color(0xff17566b), fontWeight: FontWeight.w300))))),
+            SizedBox(height: 10.0),
             SizedBox(
-                height: 20.0,
-                width: 280.0,
+                height: 30.0,
+                width: 300.0,
                 child: RaisedButton(
-                  color: Colors.cyan,
+                  color: Color(0xff3abfd3),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(2.5)),
                   textColor: Colors.white,
@@ -154,7 +163,7 @@ class _FirstPageState extends State<FirstPage> {
                         },
                   child: Text(
                     'Upload',
-                    style: TextStyle(fontSize: 14.0),
+                    style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w300),
                   ),
                 ))
           ],
@@ -187,13 +196,21 @@ class _SecondPageState extends State<SecondPage> {
                 appBar: AppBar(
                     backgroundColor: Colors.cyan[300],
                     title: const Text('Loading...')),
-                body: Center());
+                backgroundColor: Color(0xffe4edf1),
+                body: Center(
+                    child: SizedBox(
+                        height: 150,
+                        width: 150,
+                        child: LoadingIndicator(
+                            indicatorType: Indicator.ballScaleMultiple,
+                            color: Colors.cyan[200]))));
           }
           return Scaffold(
             appBar: AppBar(
               backgroundColor: Colors.cyan[300],
               title: Text(snapshot.data[1]),
             ),
+            backgroundColor: Color(0xffe4edf1),
             body: Stack(
               children: <Widget>[
                 RestaurantMap(
