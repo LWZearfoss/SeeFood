@@ -66,34 +66,30 @@ class _FirstPageState extends State<FirstPage> {
                   }
                 ]
               }));
-          return jsonDecode(vision.body)['responses'][0]['webDetection']
+          var food = jsonDecode(vision.body)['responses'][0]['webDetection']
               ['webEntities'][0]['description'];
-        }(location, image)
-            .then((food) {
-          return (var location, String food) async {
-            var google = GoogleMapsPlaces(apiKey: googleApiKey);
-            var places = await google.searchByText(food + ' food',
-                location: Location(location['latitude'], location['longitude']),
-                type: 'restaurant');
-            return [
-              location,
-              food,
-              places.results.map((res) {
-                return Place(
-                    res.geometry.location.lat,
-                    res.geometry.location.lng,
-                    res.placeId,
-                    res.name,
-                    res.formattedAddress,
-                    Image.network(
-                        google.buildPhotoUrl(
-                            photoReference: res.photos[0].photoReference,
-                            maxHeight: 300),
-                        fit: BoxFit.cover));
-              }).toList()
-            ];
-          }(location, food);
-        });
+          var google = GoogleMapsPlaces(apiKey: googleApiKey);
+          var places = await google.searchByText(food + ' food',
+              location: Location(location['latitude'], location['longitude']),
+              type: 'restaurant');
+          return [
+            location,
+            food,
+            places.results.map((res) {
+              return Place(
+                  res.geometry.location.lat,
+                  res.geometry.location.lng,
+                  res.placeId,
+                  res.name,
+                  res.formattedAddress,
+                  Image.network(
+                      google.buildPhotoUrl(
+                          photoReference: res.photos[0].photoReference,
+                          maxHeight: 300),
+                      fit: BoxFit.cover));
+            }).toList()
+          ];
+        }(location, image);
       }
     });
   }
